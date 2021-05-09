@@ -3,5 +3,5 @@
 
 ## connect
 ```shell
-$ nc $the-server-name
+$ nc $the-server-name $the-port
 ```
