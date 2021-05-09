@@ -85,12 +85,12 @@ class GameRoomStatus(enum.Enum):
 
 
 class GameRoom:
-    def __init__(self, name, host_player):
+    def __init__(self, name: str, host_player):
         self.name = name
         self.player_list = []
         self.player_list.append(host_player)
         self.host = host_player
-        self.max_players = 2
+        self.max_players = 5
         self.status = GameRoomStatus.WAITING
         self.chat_list = []
         self.chat_limit = 10
@@ -169,6 +169,15 @@ class RoomConsole(utils.CommandSet):
         self.add_cmd(utils.Command('start', 'start', self.nothing, PlayerStatus.ROOM))
         self.add_cmd(utils.Command('leave', 'leave', self.leave_func, PlayerStatus.LOBBY))
         self.add_cmd(utils.Command('say', 'say [content]', self.say_func, PlayerStatus.ROOM))
+        self.add_cmd(utils.Command('kick', 'kick [content]', self.kick_func, PlayerStatus.ROOM))
+
+    @staticmethod
+    def kick_func(player, args):
+        if len(args) < 2:
+            raise utils.ArgumentError
+        player_to_kick = None
+        # TODO: kick
+        player.game_room.player_leave()
 
     @staticmethod
     def leave_func(player, args):
